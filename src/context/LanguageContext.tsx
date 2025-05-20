@@ -212,6 +212,9 @@ const translations = {
     // Request Page
     "request.title": "Request Your Custom AI Assistant",
     "request.subtitle": "Let us build a tailored AI solution to enhance your workflow and productivity",
+    "request.success.title": "Request Submitted Successfully",
+    "request.success.message": "Thank you for your interest in Synapse. Our team will review your request and get back to you shortly.",
+    "request.success.backHome": "Back to Home",
   },
   fa: {
     // Navigation
@@ -264,7 +267,7 @@ const translations = {
     "feature7.description": "دسترسی به اطلاعات فعلی با خروجی نتیجه ساختاریافته",
     
     "feature8.title": "تعامل صوتی",
-    "feature8.description": "مکالمه طبیعی با ورودی و پاسخ صوتی",
+    "feature8.description": "��کالمه طبیعی با ورودی و پاسخ صوتی",
     
     "feature9.title": "ادغام پلتفرم خودکارسازی",
     "feature9.description": "اتصال به Make، Zapier و سایر ا��زارهای گردش کار",
@@ -327,7 +330,7 @@ const translations = {
     "useCase5.prompt": "به من در بهینه‌سازی لیست‌های محصولات کمک کن",
     "useCase5.response1": "من لیست‌های فعلی شما را تحلیل می‌کنم و بهبودهایی را برای عناوین، توضیحات و تصاویر بر اساس الگوریتم‌های بازار و الگوهای جستجوی مشتری پیشنهاد می‌دهم.",
     "useCase5.prompt2": "یک ایمیل پیگیری مشتری ایجاد کن",
-    "useCase5.response2": "اینجا یک قالب است: 'از خرید شما متشکریم! امیدواریم از [محصول] خود لذت می‌برید. آیا ممکن است تجربه خود را با یک بررسی سریع به اشتراک بگذارید؟ اینجا 10٪ تخفیف برای سفارش بعدی شماست.'",
+    "useCase5.response2": "اینجا یک قالب است: 'از خرید شما متشکریم! امیدواریم از [محصول] خود لذ�� می‌برید. آیا ممکن است تجربه خود را با یک بررسی سریع به اشتراک بگذارید؟ اینجا 10٪ تخفیف برای سفارش بعدی شماست.'",
     "useCase5.prompt3": "یک استراتژی فروش بیشتر خوب چیست؟",
     "useCase5.response3": "قانون 3 را امتحان کنید: یک گزینه بودجه، محصول هدف خود، و یک جایگزین برتر را نشان دهید. بیشتر مشتریان وقتی به این شکل ارائه شود به گزینه میانی جذب می‌شوند.",
     
@@ -416,6 +419,9 @@ const translations = {
     // Request Page
     "request.title": "درخواست دستیار هوش مصنوعی سفارشی خود",
     "request.subtitle": "بگذارید یک راه‌حل هوش مصنوعی سفارشی برای بهبود گردش کار و بهره‌وری شما بسازیم",
+    "request.success.title": "درخواست با موفقیت ارسال شد",
+    "request.success.message": "از علاقه شما به سیناپس متشکریم. تیم ما درخواست شما را بررسی کرده و به زودی با شما تماس خواهد گرفت.",
+    "request.success.backHome": "بازگشت به خانه",
   }
 };
 
