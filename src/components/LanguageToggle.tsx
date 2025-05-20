@@ -15,6 +15,7 @@ export default function LanguageToggle() {
   // Help ensure fonts are loaded properly by adding a class to the body
   useEffect(() => {
     document.body.classList.toggle('font-iransans', language === 'fa');
+    document.documentElement.setAttribute('dir', language === 'fa' ? 'rtl' : 'ltr');
   }, [language]);
 
   return (

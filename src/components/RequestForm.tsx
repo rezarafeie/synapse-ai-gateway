@@ -1,39 +1,44 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowLeft } from "lucide-react";
+import { Progress } from "@/components/ui/progress";
+import emailjs from "@emailjs/browser";
 
 type FormStep = 1 | 2 | 3;
 
 const RequestForm = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { toast } = useToast();
   const [currentStep, setCurrentStep] = useState<FormStep>(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [progress, setProgress] = useState(33);
   
   // Form data
   const [formData, setFormData] = useState({
     // Step 1: Basic Info
-    name: "",
+    fullName: "",
     email: "",
-    company: "",
     phone: "",
     
-    // Step 2: Project Requirements
+    // Step 2: Business Info
+    businessName: "",
     industry: "",
-    useCase: "",
-    requirements: "",
     
-    // Step 3: Timeline and Budget
-    timeline: "",
-    budget: "",
-    additionalInfo: ""
+    // Step 3: Project Requirements
+    description: ""
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  // Update progress bar when step changes
+  useEffect(() => {
+    setProgress(currentStep * 33);
+  }, [currentStep]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -41,21 +46,25 @@ const RequestForm = () => {
   const nextStep = () => {
     // Form validation
     if (currentStep === 1) {
-      if (!formData.name || !formData.email) {
+      if (!formData.fullName || !formData.email) {
         toast({
-          title: "Required fields missing",
-          description: "Please fill in all required fields before proceeding",
+          title: language === "en" ? "Required fields missing" : "فیلدهای ضروری خالی است",
+          description: language === "en" 
+            ? "Please fill in all required fields before proceeding" 
+            : "لطفا تمام فیلدهای ضروری را قبل از ادامه پر کنید",
           variant: "destructive"
         });
         return;
       }
-    }
-    
-    if (currentStep === 2) {
-      if (!formData.industry || !formData.useCase) {
+      
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
         toast({
-          title: "Required fields missing",
-          description: "Please fill in all required fields before proceeding",
+          title: language === "en" ? "Invalid email" : "ایمیل نامعتبر",
+          description: language === "en" 
+            ? "Please enter a valid email address" 
+            : "لطفا یک آدرس ایمیل معتبر وارد کنید",
           variant: "destructive"
         });
         return;
@@ -69,252 +78,231 @@ const RequestForm = () => {
     setCurrentStep(prev => (prev > 1 ? (prev - 1) as FormStep : prev));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const sendEmail = async () => {
+    try {
+      // Format data for email
+      const emailData = {
+        to_email: "rerafeie@gmail.com",
+        from_name: formData.fullName,
+        from_email: formData.email,
+        phone: formData.phone || "Not provided",
+        business_name: formData.businessName || "Not provided",
+        industry: formData.industry || "Not provided",
+        description: formData.description || "Not provided",
+      };
+      
+      // Log data being sent for debugging
+      console.log("Sending email with data:", emailData);
+      
+      // Send email via EmailJS (will need EmailJS service ID, template ID, and public key)
+      // This is commented out as it requires EmailJS setup
+      // await emailjs.send(
+      //  "service_id", 
+      //  "template_id", 
+      //  emailData, 
+      //  "public_key"
+      // );
+
+      // For now, we'll simulate a successful email send
+      return true;
+    } catch (error) {
+      console.error("Error sending email:", error);
+      return false;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
     
-    // Here you would typically send the data to your backend
-    toast({
-      title: "Request submitted!",
-      description: "We'll get back to you shortly about your AI assistant"
-    });
-    
-    // Reset form after submission
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      phone: "",
-      industry: "",
-      useCase: "",
-      requirements: "",
-      timeline: "",
-      budget: "",
-      additionalInfo: ""
-    });
-    setCurrentStep(1);
+    try {
+      // Send email
+      const emailSent = await sendEmail();
+      
+      if (emailSent) {
+        toast({
+          title: language === "en" ? "Request submitted!" : "درخواست ارسال شد!",
+          description: language === "en" 
+            ? "We'll get back to you shortly about your AI assistant" 
+            : "به زودی در مورد دستیار هوش مصنوعی شما با شما تماس خواهیم گرفت"
+        });
+        
+        // Reset form after submission
+        setFormData({
+          fullName: "",
+          email: "",
+          phone: "",
+          businessName: "",
+          industry: "",
+          description: ""
+        });
+        setCurrentStep(1);
+      } else {
+        toast({
+          title: language === "en" ? "Submission error" : "خطا در ارسال",
+          description: language === "en" 
+            ? "There was a problem submitting your request. Please try again." 
+            : "مشکلی در ارسال درخواست شما وجود داشت. لطفا دوباره تلاش کنید.",
+          variant: "destructive"
+        });
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // Translations based on language
+  const getFieldLabel = (en: string, fa: string) => {
+    return language === "en" ? en : fa;
   };
 
   return (
     <div className="max-w-3xl mx-auto">
       {/* Progress indicator */}
-      <div className="flex items-center justify-between mb-8">
-        {[1, 2, 3].map((step) => (
-          <div key={step} className="flex flex-col items-center">
-            <div 
-              className={`w-10 h-10 rounded-full flex items-center justify-center border-2 
-                ${currentStep >= step 
-                  ? "bg-synapse-600 border-synapse-600 text-white" 
-                  : "border-gray-300 text-gray-500"}`}
-            >
-              {step}
-            </div>
-            <span className={`text-sm mt-2 ${currentStep >= step ? "text-synapse-600 font-medium" : "text-gray-500"}`}>
-              {step === 1 ? "Basic Info" : step === 2 ? "Requirements" : "Timeline & Budget"}
-            </span>
-          </div>
-        ))}
+      <div className="mb-8">
+        <div className="flex justify-between mb-2 text-sm">
+          <span>{language === "en" ? `Step ${currentStep} of 3` : `مرحله ${currentStep} از 3`}</span>
+          <span>{progress}%</span>
+        </div>
+        <Progress value={progress} className="h-2" />
       </div>
-
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8">
+      
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-8 transition-all duration-300">
         <form onSubmit={handleSubmit}>
           {/* Step 1: Basic Information */}
-          {currentStep === 1 && (
+          <div className={`transition-opacity duration-300 ${currentStep === 1 ? 'opacity-100' : 'opacity-0 hidden'}`}>
+            <h2 className="text-2xl font-bold text-center mb-6">
+              {language === "en" ? "Personal Information" : "اطلاعات شخصی"}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 text-center mb-8">
+              {language === "en" 
+                ? "Let's start with your contact details" 
+                : "بیایید با اطلاعات تماس شما شروع کنیم"}
+            </p>
+            
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold">Basic Information</h2>
-              <p className="text-gray-600 dark:text-gray-400">Let's start with your contact details</p>
+              <div>
+                <label htmlFor="fullName" className="block text-sm font-medium mb-1">
+                  {getFieldLabel("Full Name", "نام و نام خانوادگی")} <span className="text-red-500">*</span>
+                </label>
+                <Input 
+                  id="fullName" 
+                  name="fullName" 
+                  value={formData.fullName}
+                  onChange={handleChange}
+                  placeholder={getFieldLabel("Your full name", "نام و نام خانوادگی شما")}
+                  required
+                  className="w-full"
+                />
+              </div>
               
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-1">
-                    Full Name <span className="text-red-500">*</span>
-                  </label>
-                  <Input 
-                    id="name" 
-                    name="name" 
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your full name"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-1">
-                    Email <span className="text-red-500">*</span>
-                  </label>
-                  <Input 
-                    id="email" 
-                    name="email" 
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="your.email@example.com"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium mb-1">
-                    Company / Organization
-                  </label>
-                  <Input 
-                    id="company" 
-                    name="company" 
-                    value={formData.company}
-                    onChange={handleChange}
-                    placeholder="Your company name"
-                  />
-                </div>
-                
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium mb-1">
-                    Phone Number
-                  </label>
-                  <Input 
-                    id="phone" 
-                    name="phone" 
-                    value={formData.phone}
-                    onChange={handleChange}
-                    placeholder="Your phone number"
-                  />
-                </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium mb-1">
+                  {getFieldLabel("Email", "ایمیل")} <span className="text-red-500">*</span>
+                </label>
+                <Input 
+                  id="email" 
+                  name="email" 
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder={getFieldLabel("your.email@example.com", "ایمیل.شما@مثال.com")}
+                  required
+                  dir="ltr" // Email always LTR
+                  className="w-full"
+                />
+              </div>
+              
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium mb-1">
+                  {getFieldLabel("Phone Number", "شماره تلفن")} {getFieldLabel("(optional)", "(اختیاری)")}
+                </label>
+                <Input 
+                  id="phone" 
+                  name="phone" 
+                  value={formData.phone}
+                  onChange={handleChange}
+                  placeholder={getFieldLabel("Your phone number", "شماره تلفن شما")}
+                  dir="ltr" // Phone number always LTR
+                  className="w-full"
+                />
               </div>
             </div>
-          )}
+          </div>
           
-          {/* Step 2: Project Requirements */}
-          {currentStep === 2 && (
+          {/* Step 2: Business Information */}
+          <div className={`transition-opacity duration-300 ${currentStep === 2 ? 'opacity-100' : 'opacity-0 hidden'}`}>
+            <h2 className="text-2xl font-bold text-center mb-6">
+              {language === "en" ? "Business Information" : "اطلاعات کسب و کار"}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 text-center mb-8">
+              {language === "en" 
+                ? "Tell us about your business" 
+                : "درباره کسب و کار خود به ما بگویید"}
+            </p>
+            
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold">Project Requirements</h2>
-              <p className="text-gray-600 dark:text-gray-400">Tell us about your AI assistant needs</p>
+              <div>
+                <label htmlFor="businessName" className="block text-sm font-medium mb-1">
+                  {getFieldLabel("Business Name", "نام کسب و کار")} {getFieldLabel("(optional)", "(اختیاری)")}
+                </label>
+                <Input 
+                  id="businessName" 
+                  name="businessName" 
+                  value={formData.businessName}
+                  onChange={handleChange}
+                  placeholder={getFieldLabel("Your business name", "نام کسب و کار شما")}
+                  className="w-full"
+                />
+              </div>
               
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="industry" className="block text-sm font-medium mb-1">
-                    Industry <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    id="industry" 
-                    name="industry" 
-                    value={formData.industry}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-synapse-500 focus:border-synapse-500 dark:bg-gray-800 dark:text-white"
-                    required
-                  >
-                    <option value="">Select your industry</option>
-                    <option value="healthcare">Healthcare</option>
-                    <option value="finance">Finance</option>
-                    <option value="retail">Retail</option>
-                    <option value="technology">Technology</option>
-                    <option value="manufacturing">Manufacturing</option>
-                    <option value="education">Education</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="useCase" className="block text-sm font-medium mb-1">
-                    Use Case <span className="text-red-500">*</span>
-                  </label>
-                  <select
-                    id="useCase" 
-                    name="useCase" 
-                    value={formData.useCase}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-synapse-500 focus:border-synapse-500 dark:bg-gray-800 dark:text-white"
-                    required
-                  >
-                    <option value="">Select primary use case</option>
-                    <option value="customer-support">Customer Support</option>
-                    <option value="data-analysis">Data Analysis</option>
-                    <option value="content-generation">Content Generation</option>
-                    <option value="process-automation">Process Automation</option>
-                    <option value="decision-support">Decision Support</option>
-                    <option value="other">Other</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="requirements" className="block text-sm font-medium mb-1">
-                    Specific Requirements
-                  </label>
-                  <Textarea 
-                    id="requirements" 
-                    name="requirements" 
-                    value={formData.requirements}
-                    onChange={handleChange}
-                    placeholder="Describe your specific requirements for the AI assistant"
-                    rows={5}
-                  />
-                </div>
+              <div>
+                <label htmlFor="industry" className="block text-sm font-medium mb-1">
+                  {getFieldLabel("Industry or Business Type", "صنعت یا نوع کسب و کار")}
+                </label>
+                <Input 
+                  id="industry" 
+                  name="industry" 
+                  value={formData.industry}
+                  onChange={handleChange}
+                  placeholder={getFieldLabel("e.g., Retail, Healthcare, Education", "مثال: خرده‌فروشی، سلامت، آموزش")}
+                  className="w-full"
+                />
               </div>
             </div>
-          )}
+          </div>
           
-          {/* Step 3: Timeline and Budget */}
-          {currentStep === 3 && (
+          {/* Step 3: Project Requirements */}
+          <div className={`transition-opacity duration-300 ${currentStep === 3 ? 'opacity-100' : 'opacity-0 hidden'}`}>
+            <h2 className="text-2xl font-bold text-center mb-6">
+              {language === "en" ? "Business Goals & AI Needs" : "اهداف کسب و کار و نیازهای هوش مصنوعی"}
+            </h2>
+            <p className="text-gray-600 dark:text-gray-400 text-center mb-8">
+              {language === "en" 
+                ? "Describe your business goals and what you're looking for in an AI assistant" 
+                : "اهداف کسب و کار خود و آنچه در یک دستیار هوش مصنوعی به دنبال آن هستید را توضیح دهید"}
+            </p>
+            
             <div className="space-y-6">
-              <h2 className="text-2xl font-bold">Timeline & Budget</h2>
-              <p className="text-gray-600 dark:text-gray-400">Help us understand your project constraints</p>
-              
-              <div className="space-y-4">
-                <div>
-                  <label htmlFor="timeline" className="block text-sm font-medium mb-1">
-                    Desired Timeline
-                  </label>
-                  <select
-                    id="timeline" 
-                    name="timeline" 
-                    value={formData.timeline}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-synapse-500 focus:border-synapse-500 dark:bg-gray-800 dark:text-white"
-                  >
-                    <option value="">Select timeline</option>
-                    <option value="asap">As soon as possible</option>
-                    <option value="1-month">Within 1 month</option>
-                    <option value="3-months">Within 3 months</option>
-                    <option value="6-months">Within 6 months</option>
-                    <option value="flexible">Flexible</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="budget" className="block text-sm font-medium mb-1">
-                    Budget Range
-                  </label>
-                  <select
-                    id="budget" 
-                    name="budget" 
-                    value={formData.budget}
-                    onChange={handleChange}
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-700 rounded-md focus:ring-synapse-500 focus:border-synapse-500 dark:bg-gray-800 dark:text-white"
-                  >
-                    <option value="">Select budget range</option>
-                    <option value="<5k">Less than $5,000</option>
-                    <option value="5k-10k">$5,000 - $10,000</option>
-                    <option value="10k-25k">$10,000 - $25,000</option>
-                    <option value="25k-50k">$25,000 - $50,000</option>
-                    <option value=">50k">More than $50,000</option>
-                    <option value="flexible">Flexible / Not sure yet</option>
-                  </select>
-                </div>
-                
-                <div>
-                  <label htmlFor="additionalInfo" className="block text-sm font-medium mb-1">
-                    Additional Information
-                  </label>
-                  <Textarea 
-                    id="additionalInfo" 
-                    name="additionalInfo" 
-                    value={formData.additionalInfo}
-                    onChange={handleChange}
-                    placeholder="Any other details that would help us understand your project better"
-                    rows={4}
-                  />
-                </div>
+              <div>
+                <label htmlFor="description" className="block text-sm font-medium mb-1">
+                  {getFieldLabel("Description", "توضیحات")}
+                </label>
+                <Textarea 
+                  id="description" 
+                  name="description" 
+                  value={formData.description}
+                  onChange={handleChange}
+                  placeholder={language === "en" 
+                    ? "Describe your business goals and how you think an AI assistant could help you achieve them. Include any specific features or capabilities you're looking for."
+                    : "اهداف کسب و کار خود و اینکه چگونه فکر می‌کنید یک دستیار هوش مصنوعی می‌تواند به شما در دستیابی به آنها کمک کند را توضیح دهید. هر ویژگی یا قابلیت خاصی که به دنبال آن هستید را ذکر کنید."
+                  }
+                  rows={6}
+                  className="w-full"
+                />
               </div>
             </div>
-          )}
+          </div>
           
           {/* Navigation buttons */}
           <div className="flex justify-between mt-8">
@@ -323,8 +311,11 @@ const RequestForm = () => {
                 type="button"
                 variant="outline" 
                 onClick={prevStep}
+                disabled={isSubmitting}
+                className="transition-all duration-300"
               >
-                Back
+                <ArrowLeft className={`h-4 w-4 ${language === "fa" ? "ml-2" : "mr-2"}`} />
+                {language === "en" ? "Back" : "بازگشت"}
               </Button>
             ) : (
               <div></div> // Empty div to maintain layout
@@ -334,16 +325,22 @@ const RequestForm = () => {
               <Button 
                 type="button"
                 onClick={nextStep}
+                disabled={isSubmitting}
+                className="bg-synapse-600 hover:bg-synapse-700 transition-all duration-300"
               >
-                Next
-                <ArrowRight className="ml-2 h-4 w-4" />
+                {language === "en" ? "Next" : "بعدی"}
+                <ArrowRight className={`h-4 w-4 ${language === "fa" ? "mr-2" : "ml-2"}`} />
               </Button>
             ) : (
               <Button 
                 type="submit"
-                className="bg-synapse-600 hover:bg-synapse-700"
+                disabled={isSubmitting}
+                className="bg-synapse-600 hover:bg-synapse-700 transition-all duration-300"
               >
-                Submit Request
+                {isSubmitting 
+                  ? (language === "en" ? "Submitting..." : "در حال ارسال...") 
+                  : (language === "en" ? "Submit Request" : "ارسال درخواست")
+                }
               </Button>
             )}
           </div>

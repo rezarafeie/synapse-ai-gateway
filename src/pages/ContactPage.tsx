@@ -10,8 +10,8 @@ const ContactPage = () => {
     <LanguageProvider>
       <div className="min-h-screen flex flex-col">
         <Navbar />
-        <main className="flex-grow pt-16">
-          <div className="py-16 mt-8">
+        <main className="flex-grow pt-24">
+          <div className="py-16">
             <ContactSection />
           </div>
         </main>

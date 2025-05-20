@@ -1,14 +1,14 @@
 
+import React from "react";
 import { LanguageProvider } from "@/context/LanguageContext";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
-import AboutSection from "@/components/AboutSection";
 import FeaturesSection from "@/components/FeaturesSection";
 import UseCasesSection from "@/components/UseCasesSection";
 import BenefitsSection from "@/components/BenefitsSection";
-import ProcessSection from "@/components/ProcessSection";
+import HowSynapseWorks from "@/components/HowSynapseWorks"; // New process component
 import HomeCallToAction from "@/components/HomeCallToAction";
-import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
@@ -17,11 +17,10 @@ const Index = () => {
         <Navbar />
         <main className="flex-grow">
           <HeroSection />
-          <AboutSection />
           <FeaturesSection />
           <UseCasesSection />
           <BenefitsSection />
-          <ProcessSection />
+          <HowSynapseWorks />
           <HomeCallToAction />
         </main>
         <Footer />
