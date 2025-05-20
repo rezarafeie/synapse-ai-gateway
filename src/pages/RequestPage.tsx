@@ -19,16 +19,16 @@ const SuccessMessage = () => {
         <Check className="h-12 w-12 text-green-600 dark:text-green-400" />
       </div>
       <h2 className="text-3xl font-bold mb-4 gradient-text">
-        {t("request.success.title")}
+        {t("request.success.title", "Request Submitted")}
       </h2>
       <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
-        {t("request.success.message")}
+        {t("request.success.message", "Your request has been sent successfully. We will review it and contact you soon.")}
       </p>
       <Button 
         onClick={() => navigate("/")}
         className="bg-synapse-600 hover:bg-synapse-700"
       >
-        {t("request.success.backHome")}
+        {t("request.success.backHome", "Back to Home")}
       </Button>
     </div>
   );
@@ -48,10 +48,10 @@ const RequestPageContent = () => {
               <>
                 <div className="text-center mb-16">
                   <h1 className="text-4xl md:text-5xl font-bold mb-4 gradient-text">
-                    {t("request.title")}
+                    {t("request.title", "Request Your AI Assistant")}
                   </h1>
                   <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-                    {t("request.subtitle")}
+                    {t("request.subtitle", "Fill out the form below to request your custom AI assistant tailored to your business needs")}
                   </p>
                 </div>
                 
