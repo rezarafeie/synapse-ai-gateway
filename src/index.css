@@ -102,6 +102,9 @@
   /* RTL support for Farsi */
   html[dir="rtl"] * {
     font-family: 'IRANSans', sans-serif !important;
+  }
+
+  html[dir="rtl"] body {
     text-align: right;
   }
 
@@ -174,4 +177,42 @@
 /* Improved RTL support */
 [dir="rtl"] .space-x-4 {
   --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .space-x-2 {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .space-x-3 {
+  --tw-space-x-reverse: 1;
+}
+
+[dir="rtl"] .mr-2 {
+  margin-right: 0;
+  margin-left: 0.5rem;
+}
+
+[dir="rtl"] .ml-2 {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}
+
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .text-right {
+  text-align: left;
+}
+
+[dir="rtl"] .items-start {
+  align-items: flex-start;
+}
+
+[dir="rtl"] .justify-start {
+  justify-content: flex-start;
+}
+
+[dir="rtl"] .justify-end {
+  justify-content: flex-end;
 }

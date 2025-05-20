@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect } from "react";
 
 type Language = "en" | "fa";
@@ -209,6 +208,10 @@ const translations = {
     // Footer
     "footer.rights": "All Rights Reserved",
     "footer.company": "Rafiei Group",
+    
+    // Request Page
+    "request.title": "Request Your Custom AI Assistant",
+    "request.subtitle": "Let us build a tailored AI solution to enhance your workflow and productivity",
   },
   fa: {
     // Navigation
@@ -264,7 +267,7 @@ const translations = {
     "feature8.description": "مکالمه طبیعی با ورودی و پاسخ صوتی",
     
     "feature9.title": "ادغام پلتفرم خودکارسازی",
-    "feature9.description": "اتصال به Make، Zapier و سایر ابزارهای گردش کار",
+    "feature9.description": "اتصال به Make، Zapier و سایر ا��زارهای گردش کار",
     
     "feature10.title": "برنامه‌های شخصی‌سازی شده",
     "feature10.description": "مربیگری، مطالعه، سلامتی و کمک در برنامه‌ریزی کسب و کار",
@@ -303,7 +306,7 @@ const translations = {
     
     "useCase3.title": "دستیار اشکان هریت",
     "useCase3.description": "مشاور روانشناسی و خودیاری برای رشد شخصی",
-    "useCase3.prompt": "در مدیریت اضطراب به من کمک کن",
+    "useCase3.prompt": "در مدیریت اضط��اب به من کمک کن",
     "useCase3.response1": "بیایید مکث کنیم. من شما را از طریق یک تمرین 90 ثانیه‌ای زمینه‌یابی هدایت می‌کنم: 5 چیزی که می‌بینید، 4 چیزی که می‌توانید لمس کنید، 3 چیزی که می‌شنوید، 2 چیزی که می‌توانید بو کنید و 1 چیزی که می‌توانید بچشید را توجه کنید.",
     "useCase3.prompt2": "کتاب 'اثر مرکب' را خلاصه کن.",
     "useCase3.response2": "این کتاب درباره این است که چگونه عادت‌های کوچک و مداوم به نتایج بزرگ در طول زمان منجر می‌شوند. دارن هاردی توضیح می‌دهد که موفقیت از تغییرات رادیکال نمی‌آید بلکه از نظم روزانه‌ای می‌آید که انباشته می‌شود.",
@@ -377,7 +380,7 @@ const translations = {
     "process.step3": "نقشه‌برداری ویژگی‌ها",
     "process.step3.description": "انتخاب قابلیت‌های هوش مصنوعی مناسب",
     
-    "process.step4": "گفتگو و حافظه سفارشی",
+    "process.step4": "گفتگو و حا��ظه سفارشی",
     "process.step4.description": "توسعه منطق شخصی‌سازی شده",
     
     "process.step5": "ساخت فنی",
@@ -409,6 +412,10 @@ const translations = {
     // Footer
     "footer.rights": "تمامی حقوق محفوظ است",
     "footer.company": "گروه رفیعی",
+    
+    // Request Page
+    "request.title": "درخواست دستیار هوش مصنوعی سفارشی خود",
+    "request.subtitle": "بگذارید یک راه‌حل هوش مصنوعی سفارشی برای بهبود گردش کار و بهره‌وری شما بسازیم",
   }
 };
 

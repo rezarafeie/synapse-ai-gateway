@@ -32,7 +32,7 @@ export default function Footer() {
                   href="mailto:contact@rafiei.co" 
                   className="text-gray-600 dark:text-gray-400 hover:text-synapse-600 dark:hover:text-synapse-400 flex items-center"
                 >
-                  <Mail size={16} className="mr-2" />
+                  <Mail size={16} className="mr-2 rtl:mr-0 rtl:ml-2" />
                   contact@rafiei.co
                 </a>
               </li>
