@@ -7,7 +7,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-import { Card, CardContent } from "@/components/ui/card";
 
 type FormStep = 1 | 2 | 3;
 type WebhookStatus = 'idle' | 'loading' | 'success' | 'error';
@@ -104,13 +103,14 @@ const RequestForm = ({ onSubmitSuccess }: RequestFormProps) => {
         language: language,
       };
       
-      // Send data to webhook endpoint with proper JSON content-type
+      // Send data to webhook endpoint with proper JSON content-type and no-cors mode
       const response = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(webhookData),
+        mode: "no-cors", // Add no-cors mode to bypass CORS issues
       });
 
       return true;

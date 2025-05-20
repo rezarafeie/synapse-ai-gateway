@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/context/LanguageContext";
 import { Brain } from "lucide-react";
@@ -16,14 +17,14 @@ export default function HeroSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className={`flex-1 ${language === "fa" ? "md:order-2" : ""}`}>
-            <div className="text-center md:text-left">
+            <div className={`text-center ${language === "fa" ? "md:text-right" : "md:text-left"}`}>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
                 <span className="gradient-text">{t("hero.title")}</span>
               </h1>
               <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto md:mx-0">
                 {t("hero.subtitle")}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+              <div className={`flex flex-col sm:flex-row gap-4 justify-center ${language === "fa" ? "md:justify-end" : "md:justify-start"}`}>
                 <Link to="/request">
                   <Button size="lg" className="bg-synapse-600 hover:bg-synapse-700 text-white">
                     {t("hero.cta")}
