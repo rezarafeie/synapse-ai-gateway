@@ -4,7 +4,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ProcessSection from "@/components/ProcessSection";
-import ContactSection from "@/components/ContactSection"; // Added this import
+import ContactSection from "@/components/ContactSectionAlt"; // Changed the import to use ContactSectionAlt
 
 const RequestPage = () => {
   return (
