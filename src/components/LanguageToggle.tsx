@@ -20,12 +20,12 @@ export default function LanguageToggle() {
   return (
     <Button 
       variant="outline" 
+      size="icon"
       onClick={toggleLanguage}
-      aria-label="Toggle language"
-      className="px-3 text-sm font-medium inline-flex items-center"
+      aria-label={language === "en" ? "Switch to Persian" : "Switch to English"}
+      className="rounded-full"
     >
-      <Globe className="h-4 w-4 mr-1 rtl:ml-1 rtl:mr-0" />
-      <span>{language === "en" ? "فارسی" : "English"}</span>
+      <Globe className="h-5 w-5" />
     </Button>
   );
 }

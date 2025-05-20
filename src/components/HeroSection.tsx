@@ -1,7 +1,7 @@
-
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/context/LanguageContext";
 import { Brain } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   const { t, language } = useLanguage();
@@ -24,12 +24,16 @@ export default function HeroSection() {
                 {t("hero.subtitle")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-                <Button size="lg" className="bg-synapse-600 hover:bg-synapse-700 text-white">
-                  {t("hero.cta")}
-                </Button>
-                <Button size="lg" variant="outline">
-                  {t("hero.secondary")}
-                </Button>
+                <Link to="/request">
+                  <Button size="lg" className="bg-synapse-600 hover:bg-synapse-700 text-white">
+                    {t("hero.cta")}
+                  </Button>
+                </Link>
+                <Link to="/contact">
+                  <Button size="lg" variant="outline">
+                    {t("hero.secondary")}
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
