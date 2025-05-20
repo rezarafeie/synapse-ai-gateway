@@ -5,9 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowRight, ArrowLeft } from "lucide-react";
+import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
-import emailjs from "@emailjs/browser";
 
 type FormStep = 1 | 2 | 3;
 
@@ -17,6 +16,9 @@ const RequestForm = () => {
   const [currentStep, setCurrentStep] = useState<FormStep>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [progress, setProgress] = useState(33);
+  
+  // Webhook URL
+  const WEBHOOK_URL = "https://rafeie.app.n8n.cloud/webhook-test/synapserequest";
   
   // Form data
   const [formData, setFormData] = useState({
@@ -78,36 +80,41 @@ const RequestForm = () => {
     setCurrentStep(prev => (prev > 1 ? (prev - 1) as FormStep : prev));
   };
 
-  const sendEmail = async () => {
+  const sendToWebhook = async () => {
     try {
-      // Format data for email
-      const emailData = {
-        to_email: "rerafeie@gmail.com",
-        from_name: formData.fullName,
-        from_email: formData.email,
+      // Format data for webhook
+      const webhookData = {
+        fullName: formData.fullName,
+        email: formData.email,
         phone: formData.phone || "Not provided",
-        business_name: formData.businessName || "Not provided",
+        businessName: formData.businessName || "Not provided",
         industry: formData.industry || "Not provided",
         description: formData.description || "Not provided",
+        submittedAt: new Date().toISOString(),
+        language: language,
       };
       
       // Log data being sent for debugging
-      console.log("Sending email with data:", emailData);
+      console.log("Sending webhook with data:", webhookData);
       
-      // Send email via EmailJS (will need EmailJS service ID, template ID, and public key)
-      // This is commented out as it requires EmailJS setup
-      // await emailjs.send(
-      //  "service_id", 
-      //  "template_id", 
-      //  emailData, 
-      //  "public_key"
-      // );
+      // Send data to webhook endpoint
+      const response = await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(webhookData),
+      });
 
-      // For now, we'll simulate a successful email send
-      return true;
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      
+      // Return webhook response
+      return await response.json();
     } catch (error) {
-      console.error("Error sending email:", error);
-      return false;
+      console.error("Error sending webhook:", error);
+      throw error;
     }
   };
 
@@ -116,36 +123,48 @@ const RequestForm = () => {
     setIsSubmitting(true);
     
     try {
-      // Send email
-      const emailSent = await sendEmail();
-      
-      if (emailSent) {
+      // Validate required fields before submission
+      if (!formData.fullName || !formData.email) {
         toast({
-          title: language === "en" ? "Request submitted!" : "درخواست ارسال شد!",
+          title: language === "en" ? "Required fields missing" : "فیلدهای ضروری خالی است",
           description: language === "en" 
-            ? "We'll get back to you shortly about your AI assistant" 
-            : "به زودی در مورد دستیار هوش مصنوعی شما با شما تماس خواهیم گرفت"
-        });
-        
-        // Reset form after submission
-        setFormData({
-          fullName: "",
-          email: "",
-          phone: "",
-          businessName: "",
-          industry: "",
-          description: ""
-        });
-        setCurrentStep(1);
-      } else {
-        toast({
-          title: language === "en" ? "Submission error" : "خطا در ارسال",
-          description: language === "en" 
-            ? "There was a problem submitting your request. Please try again." 
-            : "مشکلی در ارسال درخواست شما وجود داشت. لطفا دوباره تلاش کنید.",
+            ? "Please fill in all required fields before submitting" 
+            : "لطفا تمام فیلدهای ضروری را قبل از ارسال پر کنید",
           variant: "destructive"
         });
+        setIsSubmitting(false);
+        return;
       }
+      
+      // Send data to webhook
+      await sendToWebhook();
+      
+      toast({
+        title: language === "en" ? "Request submitted!" : "درخواست ارسال شد!",
+        description: language === "en" 
+          ? "We'll get back to you shortly about your AI assistant" 
+          : "به زودی در مورد دستیار هوش مصنوعی شما با شما تماس خواهیم گرفت"
+      });
+      
+      // Reset form after successful submission
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        businessName: "",
+        industry: "",
+        description: ""
+      });
+      setCurrentStep(1);
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast({
+        title: language === "en" ? "Submission error" : "خطا در ارسال",
+        description: language === "en" 
+          ? "There was a problem submitting your request. Please try again." 
+          : "مشکلی در ارسال درخواست شما وجود داشت. لطفا دوباره تلاش کنید.",
+        variant: "destructive"
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -337,10 +356,14 @@ const RequestForm = () => {
                 disabled={isSubmitting}
                 className="bg-synapse-600 hover:bg-synapse-700 transition-all duration-300"
               >
-                {isSubmitting 
-                  ? (language === "en" ? "Submitting..." : "در حال ارسال...") 
-                  : (language === "en" ? "Submit Request" : "ارسال درخواست")
-                }
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className={`h-4 w-4 animate-spin ${language === "fa" ? "ml-2" : "mr-2"}`} />
+                    {language === "en" ? "Submitting..." : "در حال ارسال..."}
+                  </>
+                ) : (
+                  language === "en" ? "Submit Request" : "ارسال درخواست"
+                )}
               </Button>
             )}
           </div>
@@ -351,3 +374,4 @@ const RequestForm = () => {
 };
 
 export default RequestForm;
+
