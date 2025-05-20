@@ -4,6 +4,7 @@ import { LanguageProvider } from "@/context/LanguageContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RequestForm from "@/components/RequestForm";
+import { Toaster } from "@/components/ui/toaster";
 
 const RequestPage = () => {
   return (
@@ -27,6 +28,7 @@ const RequestPage = () => {
           </div>
         </main>
         <Footer />
+        <Toaster />
       </div>
     </LanguageProvider>
   );
