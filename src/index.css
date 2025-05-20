@@ -96,19 +96,17 @@
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
   }
 
   /* RTL support for Farsi */
-  html[dir="rtl"] {
-    font-family: 'IRANSans', sans-serif;
-  }
-
   html[dir="rtl"] * {
+    font-family: 'IRANSans', sans-serif !important;
     text-align: right;
   }
 
-  html[dir="ltr"] {
-    font-family: 'Inter', sans-serif;
+  .font-iransans {
+    font-family: 'IRANSans', sans-serif !important;
   }
 }
 
@@ -141,4 +139,39 @@
 
 .mesh-bg {
   @apply bg-mesh-gradient dark:bg-dark-mesh-gradient;
+}
+
+/* Add specific styles for animations in the use cases section */
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hide scrollbar but allow scrolling */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Typing animation effect */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink 1s infinite;
+}
+
+/* Improved RTL support */
+[dir="rtl"] .space-x-4 {
+  --tw-space-x-reverse: 1;
 }

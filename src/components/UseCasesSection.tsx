@@ -1,46 +1,131 @@
-
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Button } from "@/components/ui/button";
-import { Rocket, ArrowRight } from "lucide-react";
+import { Send, MessageSquare, User } from "lucide-react";
+import TypingAnimation from "./TypingAnimation";
+
+type AssistantType = {
+  id: string;
+  name: string;
+  description: string;
+  avatar: string;
+  prompts: {
+    text: string;
+    response: string;
+  }[];
+};
 
 export default function UseCasesSection() {
   const { t } = useLanguage();
-  const [activeTab, setActiveTab] = useState(0);
-  
-  const useCases = [
+  const [selectedAssistant, setSelectedAssistant] = useState(0);
+  const [activePrompt, setActivePrompt] = useState(0);
+  const [typing, setTyping] = useState(false);
+  const [showResponse, setShowResponse] = useState(false);
+  const messageEndRef = useRef<HTMLDivElement>(null);
+
+  const assistants: AssistantType[] = [
     {
-      title: t("useCase1.title"),
+      id: "rafiei",
+      name: t("useCase1.title"),
       description: t("useCase1.description"),
-      prompt: t("useCase1.prompt"),
-      image: "/images/use-case-1.svg",
+      avatar: "👨‍💼",
+      prompts: [
+        {
+          text: t("useCase1.prompt"),
+          response: t("useCase1.response1")
+        },
+        {
+          text: t("useCase1.prompt2"),
+          response: t("useCase1.response2")
+        },
+        {
+          text: t("useCase1.prompt3"),
+          response: t("useCase1.response3")
+        },
+      ]
     },
     {
-      title: t("useCase2.title"),
+      id: "mahtab",
+      name: t("useCase2.title"),
       description: t("useCase2.description"),
-      prompt: t("useCase2.prompt"),
-      image: "/images/use-case-2.svg",
+      avatar: "👩‍⚕️",
+      prompts: [
+        {
+          text: t("useCase2.prompt"),
+          response: t("useCase2.response1")
+        },
+        {
+          text: t("useCase2.prompt2"),
+          response: t("useCase2.response2")
+        },
+        {
+          text: t("useCase2.prompt3"),
+          response: t("useCase2.response3")
+        },
+      ]
     },
     {
-      title: t("useCase3.title"),
+      id: "ashkan",
+      name: t("useCase3.title"),
       description: t("useCase3.description"),
-      prompt: t("useCase3.prompt"),
-      image: "/images/use-case-3.svg",
+      avatar: "👨‍🏫",
+      prompts: [
+        {
+          text: t("useCase3.prompt"),
+          response: t("useCase3.response1")
+        },
+        {
+          text: t("useCase3.prompt2"),
+          response: t("useCase3.response2")
+        },
+        {
+          text: t("useCase3.prompt3"),
+          response: t("useCase3.response3")
+        },
+      ]
     },
     {
-      title: t("useCase4.title"),
+      id: "ladyboss",
+      name: t("useCase4.title"),
       description: t("useCase4.description"),
-      prompt: t("useCase4.prompt"),
-      image: "/images/use-case-4.svg",
+      avatar: "👩‍💼",
+      prompts: [
+        {
+          text: t("useCase4.prompt"),
+          response: t("useCase4.response1")
+        },
+        {
+          text: t("useCase4.prompt2"),
+          response: t("useCase4.response2")
+        },
+        {
+          text: t("useCase4.prompt3"),
+          response: t("useCase4.response3")
+        },
+      ]
     },
   ];
-
-  // Placeholder for trying the assistant
-  const tryAssistant = (prompt: string) => {
-    console.log("Trying assistant with prompt:", prompt);
-    // In a real implementation, this would open a modal or redirect to a demo
+  
+  const scrollToBottom = () => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
-
+  
+  useEffect(() => {
+    if (showResponse) {
+      scrollToBottom();
+    }
+  }, [showResponse]);
+  
+  const tryPrompt = (promptIndex: number) => {
+    setActivePrompt(promptIndex);
+    setTyping(true);
+    setShowResponse(true);
+  };
+  
+  const handleTextComplete = () => {
+    setTyping(false);
+  };
+  
   return (
     <section id="useCases" className="py-20 bg-white dark:bg-gray-950">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -53,44 +138,153 @@ export default function UseCasesSection() {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
-          {useCases.map((useCase, idx) => (
-            <div 
-              key={idx}
-              className="glass card-glow rounded-xl p-6 transition-all duration-300 hover:-translate-y-1"
-              onClick={() => setActiveTab(idx)}
-            >
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-semibold">{useCase.title}</h3>
-                <div className={`h-3 w-3 rounded-full ${activeTab === idx ? 'bg-synapse-500' : 'bg-gray-300 dark:bg-gray-700'}`}></div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-400 mb-4">{useCase.description}</p>
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                <div>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{t("useCases.tryIt")}</p>
-                  <p className="font-medium italic text-synapse-600 dark:text-synapse-400">{useCase.prompt}</p>
-                </div>
-                <Button 
-                  size="sm" 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    tryAssistant(useCase.prompt);
-                  }} 
-                  className="bg-synapse-600 hover:bg-synapse-700 text-white"
-                >
-                  <ArrowRight size={16} className="mr-2" />
-                  Try
-                </Button>
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Assistant selection sidebar */}
+          <div className="w-full lg:w-64 flex-shrink-0">
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-xl p-4">
+              <h3 className="text-lg font-semibold mb-4 border-b border-gray-200 dark:border-gray-700 pb-2">
+                {t("useCases.assistants")}
+              </h3>
+              <div className="space-y-2">
+                {assistants.map((assistant, idx) => (
+                  <button
+                    key={assistant.id}
+                    onClick={() => {
+                      setSelectedAssistant(idx);
+                      setActivePrompt(-1);
+                      setShowResponse(false);
+                      setTyping(false);
+                    }}
+                    className={`w-full text-left p-3 rounded-lg transition-colors ${
+                      selectedAssistant === idx
+                        ? "bg-synapse-100 dark:bg-synapse-900 text-synapse-600 dark:text-synapse-300"
+                        : "hover:bg-gray-100 dark:hover:bg-gray-800"
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      <div className="text-2xl mr-3">{assistant.avatar}</div>
+                      <div>
+                        <div className="font-medium">{assistant.name}</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          {assistant.description.length > 20 
+                            ? `${assistant.description.substring(0, 20)}...` 
+                            : assistant.description}
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                ))}
               </div>
             </div>
-          ))}
-        </div>
-        
-        <div className="mt-16 flex justify-center">
-          <Button size="lg" className="bg-synapse-600 hover:bg-synapse-700 text-white">
-            <Rocket className="mr-2 h-5 w-5" />
-            {t("hero.cta")}
-          </Button>
+          </div>
+          
+          {/* Chat interface */}
+          <div className="flex-grow">
+            <div className="bg-gray-50 dark:bg-gray-900 rounded-xl overflow-hidden flex flex-col h-[600px]">
+              {/* Chat header */}
+              <div className="bg-white dark:bg-gray-800 p-4 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center">
+                  <div className="text-2xl mr-3">{assistants[selectedAssistant].avatar}</div>
+                  <div>
+                    <div className="font-medium">{assistants[selectedAssistant].name}</div>
+                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                      {assistants[selectedAssistant].description}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Chat messages */}
+              <div className="flex-grow overflow-y-auto p-4 space-y-4">
+                {/* Welcome message */}
+                <div className="flex items-start">
+                  <div className="flex h-9 w-9 shrink-0 select-none items-center justify-center rounded-full bg-synapse-100 dark:bg-synapse-900 text-synapse-500">
+                    <MessageSquare className="h-5 w-5" />
+                  </div>
+                  <div className="ml-3 flex-1 space-y-1 bg-white dark:bg-gray-800 p-4 rounded-lg">
+                    <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                      {t("useCases.welcome").replace("{name}", assistants[selectedAssistant].name)}
+                    </p>
+                  </div>
+                </div>
+                
+                {/* User prompt and AI response, if selected */}
+                {showResponse && (
+                  <>
+                    <div className="flex items-start justify-end">
+                      <div className="mr-3 flex-1 space-y-1 bg-synapse-100 dark:bg-synapse-900 p-4 rounded-lg text-right">
+                        <p className="text-sm leading-relaxed text-gray-800 dark:text-gray-200">
+                          {assistants[selectedAssistant].prompts[activePrompt].text}
+                        </p>
+                      </div>
+                      <div className="flex h-9 w-9 shrink-0 select-none items-center justify-center rounded-full bg-synapse-500 text-white">
+                        <User className="h-5 w-5" />
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start">
+                      <div className="flex h-9 w-9 shrink-0 select-none items-center justify-center rounded-full bg-synapse-100 dark:bg-synapse-900 text-synapse-500">
+                        <MessageSquare className="h-5 w-5" />
+                      </div>
+                      <div className="ml-3 flex-1 space-y-1 bg-white dark:bg-gray-800 p-4 rounded-lg">
+                        <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
+                          {typing ? (
+                            <TypingAnimation 
+                              text={assistants[selectedAssistant].prompts[activePrompt].response} 
+                              onComplete={handleTextComplete} 
+                            />
+                          ) : (
+                            assistants[selectedAssistant].prompts[activePrompt].response
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  </>
+                )}
+                
+                <div ref={messageEndRef} />
+              </div>
+              
+              {/* Prompt suggestions */}
+              <div className="bg-white dark:bg-gray-800 p-4 border-t border-gray-200 dark:border-gray-700">
+                <h4 className="text-sm text-gray-500 dark:text-gray-400 mb-3">
+                  {t("useCases.tryIt")}:
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {assistants[selectedAssistant].prompts.map((prompt, idx) => (
+                    <Button
+                      key={idx}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => tryPrompt(idx)}
+                      disabled={typing}
+                      className="text-sm"
+                    >
+                      {prompt.text.length > 25 
+                        ? `${prompt.text.substring(0, 25)}...` 
+                        : prompt.text}
+                    </Button>
+                  ))}
+                </div>
+                
+                {/* Dummy input field */}
+                <div className="mt-4 flex items-center">
+                  <input
+                    type="text"
+                    className="flex-grow px-4 py-2 border border-gray-300 dark:border-gray-700 rounded-l-md focus:outline-none focus:ring-2 focus:ring-synapse-500 dark:focus:ring-synapse-400 bg-white dark:bg-gray-800"
+                    placeholder={t("useCases.typePrompt")}
+                    disabled
+                  />
+                  <button 
+                    className="bg-synapse-600 text-white px-4 py-2 rounded-r-md disabled:opacity-50"
+                    disabled
+                  >
+                    <Send size={18} />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
