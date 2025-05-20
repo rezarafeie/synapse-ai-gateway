@@ -78,23 +78,64 @@ const translations = {
     // Use Cases
     "useCases.title": "Success Stories",
     "useCases.subtitle": "Real-World Assistants Built with Synapse",
-    "useCases.tryIt": "Try it yourself:",
+    "useCases.assistants": "Select an Assistant",
+    "useCases.tryIt": "Try it yourself",
+    "useCases.typePrompt": "Type your message...",
+    "useCases.welcome": "Hi there! I'm {name}. How can I help you today?",
     
     "useCase1.title": "Rafiei Academy Assistant",
     "useCase1.description": "Business & content AI supporting thousands of entrepreneurs",
-    "useCase1.prompt": "What's a drop shipping idea?",
+    "useCase1.prompt": "How do I start an online business?",
+    "useCase1.response1": "Let's begin with your interests. I'll suggest 3 models to choose from based on your skills and market opportunities.",
+    "useCase1.prompt2": "Give me a dropshipping product idea.",
+    "useCase1.response2": "Try a compact travel tripod — it's trending on social media, easy to source from suppliers, and has good profit margins.",
+    "useCase1.prompt3": "I feel scattered today.",
+    "useCase1.response3": "No worries. Want a 3-step focus reset? Try: 1) Close all tabs except one, 2) Set a 25-minute timer, and 3) Complete one small task.",
     
     "useCase2.title": "Mahtab Coach Assistant",
     "useCase2.description": "Nutrition, fitness and motivation guidance",
-    "useCase2.prompt": "Give me a motivational audio",
+    "useCase2.prompt": "What's a healthy lunch that keeps me full?",
+    "useCase2.response1": "Grilled chicken, quinoa, and avocado with a side of roasted vegetables. This combination gives you protein, healthy fats, and complex carbs to stay satisfied.",
+    "useCase2.prompt2": "Give me a motivational audio",
+    "useCase2.response2": "🎧 *Here's a 10-second pep talk to boost your energy. Remember that every small step you take today is building the foundation for your success tomorrow.*",
+    "useCase2.prompt3": "Is this food high in calories?",
+    "useCase2.response3": "Let me check the photo you've shared — based on what I can see, this meal looks to contain approximately 600 calories, with a good balance of proteins and healthy fats.",
     
     "useCase3.title": "Ashkan Harrit Assistant",
     "useCase3.description": "Psychology & self-help advisor for personal growth",
     "useCase3.prompt": "Help me with anxiety management",
+    "useCase3.response1": "Let's pause. I'll guide you through a 90-second grounding exercise: Notice 5 things you can see, 4 you can touch, 3 you can hear, 2 you can smell, and 1 you can taste.",
+    "useCase3.prompt2": "Summarize the book 'The Compound Effect'.",
+    "useCase3.response2": "It's about how small, consistent habits lead to massive results over time. Darren Hardy explains that success doesn't come from radical changes but from daily disciplines that compound.",
+    "useCase3.prompt3": "I don't know what I want in life.",
+    "useCase3.response3": "That's okay. Want to explore 3 journal prompts together? Try: 1) What did you enjoy as a child? 2) When do you lose track of time? 3) What would you do if you couldn't fail?",
     
     "useCase4.title": "LadyBoss Assistant",
     "useCase4.description": "Women-led branding & marketing support",
-    "useCase4.prompt": "Create a social media plan",
+    "useCase4.prompt": "How do I start designing my course for women?",
+    "useCase4.response1": "Tell me your goal and audience — I'll suggest structure and session titles. For example, if it's a confidence course, we could start with 'Identifying Your Unique Strengths' as module one.",
+    "useCase4.prompt2": "Create a social media plan",
+    "useCase4.response2": "Here's a weekly framework: Monday - Inspirational quote, Tuesday - Educational tip, Wednesday - Client spotlight, Thursday - Personal story, Friday - Free resource, Weekend - Engagement question.",
+    "useCase4.prompt3": "Write a caption about confidence for my IG story",
+    "useCase4.response3": "You are not 'too much' — you're exactly enough. Own it. The world needs your authentic voice, not another echo. #OwnYourPower #LadyBossEnergy",
+    
+    "useCase5.title": "E-Commerce Assistant",
+    "useCase5.description": "Product management and customer service",
+    "useCase5.prompt": "Help me optimize my product listings",
+    "useCase5.response1": "I'll analyze your current listings and suggest improvements for titles, descriptions and images based on marketplace algorithms and customer search patterns.",
+    "useCase5.prompt2": "Create a customer follow-up email",
+    "useCase5.response2": "Here's a template: 'Thank you for your purchase! We hope you're enjoying your [product]. Would you mind sharing your experience with a quick review? Here's 10% off your next order.'",
+    "useCase5.prompt3": "What's a good upselling strategy?",
+    "useCase5.response3": "Try the rule of 3: Show a budget option, your target product, and a premium alternative. Most customers gravitate to the middle option when presented this way.",
+    
+    "useCase6.title": "Personal Assistant",
+    "useCase6.description": "Daily tasks and schedule management",
+    "useCase6.prompt": "Organize my day for maximum productivity",
+    "useCase6.response1": "I've blocked your calendar with focused work sessions in the morning, meetings mid-day, and admin tasks in late afternoon when energy typically dips.",
+    "useCase6.prompt2": "Remind me about my appointment",
+    "useCase6.response2": "You have a doctor's appointment at 3:30 PM tomorrow. I've added it to your calendar with a 30-minute reminder and included the clinic address.",
+    "useCase6.prompt3": "Summarize my emails from today",
+    "useCase6.response3": "You received 12 emails: 3 require immediate action (client proposals), 4 are FYI (newsletter updates), and 5 are low priority. The most urgent is from Sarah about tomorrow's presentation.",
     
     // Benefits
     "benefits.title": "Transform Your Workflow",
@@ -148,21 +189,11 @@ const translations = {
     "process.step7": "Delivery & Training",
     "process.step7.description": "Implementation and team onboarding",
     
-    // Pricing
-    "pricing.title": "Investment",
-    "pricing.subtitle": "Transparent Pricing Structure",
-    "pricing.description": "Our pricing is based on the specific requirements of your AI assistant project.",
-    
-    "pricing.setup": "Setup Fee:",
-    "pricing.setupValue": "Depends on project scope and complexity",
-    
-    "pricing.subscription": "Monthly Subscription:",
-    "pricing.subscriptionValue": "Based on usage and premium AI models",
-    
-    "pricing.custom": "Custom Quote:",
-    "pricing.customValue": "Provided after initial consultation",
-    
-    "pricing.cta": "Get Your Custom Quote",
+    // CTA section
+    "cta.title": "Ready to Transform Your Workflow?",
+    "cta.subtitle": "Let Synapse build your custom AI assistant to automate tasks, enhance productivity, and scale your operations.",
+    "cta.primary": "Get Your Custom Assistant",
+    "cta.secondary": "Book a Consultation",
     
     // Contact
     "contact.title": "Start Your Journey",
@@ -247,23 +278,64 @@ const translations = {
     // Use Cases
     "useCases.title": "داستان‌های موفقیت",
     "useCases.subtitle": "دستیاران واقعی ساخته شده با سیناپس",
-    "useCases.tryIt": "خودتان امتحان کنید:",
+    "useCases.assistants": "یک دستیار را انتخاب کنید",
+    "useCases.tryIt": "خودتان امتحان کنید",
+    "useCases.typePrompt": "پیام خود را بنویسید...",
+    "useCases.welcome": "سلام! من {name} هستم. چطور می‌توانم امروز به شما کمک کنم؟",
     
     "useCase1.title": "دستیار آکادمی رفیعی",
     "useCase1.description": "هوش مصنوعی کسب و کار و محتوا که از هزاران کارآفرین پشتیبانی می‌کند",
-    "useCase1.prompt": "یک ایده دراپ‌شیپینگ چیست؟",
+    "useCase1.prompt": "چگونه یک کسب و کار آنلاین را شروع کنم؟",
+    "useCase1.response1": "بیایید با علایق شما شروع کنیم. من 3 مدل را بر اساس مهارت‌ها و فرصت‌های بازار به شما پیشنهاد می‌دهم.",
+    "useCase1.prompt2": "یک ایده دراپ‌شیپینگ به من بده.",
+    "useCase1.response2": "سه‌پایه سفری فشرده را امتحان کنید - در رسانه‌های اجتماعی محبوب است، تهیه آن از تامین‌کنندگان آسان است و حاشیه سود خوبی دارد.",
+    "useCase1.prompt3": "امروز پراکنده‌ذهن هستم.",
+    "useCase1.response3": "نگران نباشید. می‌خواهید یک بازنشانی تمرکز 3 مرحله‌ای را امتحان کنید؟ 1) همه تب‌ها را به جز یکی ببندید، 2) یک تایمر 25 دقیقه‌ای تنظیم کنید، و 3) یک کار کوچک را انجام دهید.",
     
     "useCase2.title": "دستیار مربی مهتاب",
     "useCase2.description": "راهنمایی تغذیه، تناسب اندام و انگیزش",
-    "useCase2.prompt": "یک صوت انگیزشی به من بده",
+    "useCase2.prompt": "یک ناهار سالم که مرا سیر نگه دارد چیست؟",
+    "useCase2.response1": "مرغ کبابی، کینوا و آووکادو با کنار سبزیجات برشته. این ترکیب پروتئین، چربی‌های سالم و کربوهیدرات‌های پیچیده را برای سیر ماندن به شما می‌دهد.",
+    "useCase2.prompt2": "یک صوت انگیزشی به من بده",
+    "useCase2.response2": "🎧 *اینجا یک صحبت انگیزشی 10 ثانیه‌ای برای افزایش انرژی شماست. به یاد داشته باشید که هر قدم کوچکی که امروز برمی‌دارید، پایه موفقیت فردای شما را می‌سازد.*",
+    "useCase2.prompt3": "آیا این غذا کالری بالایی دارد؟",
+    "useCase2.response3": "اجازه دهید عکسی را که به اشتراک گذاشته‌اید بررسی کنم - بر اساس آنچه می‌توانم ببینم، این وعده غذایی حاوی تقریباً 600 کالری است، با تعادل خوبی از پروتئین‌ها و چربی‌های سالم.",
     
     "useCase3.title": "دستیار اشکان هریت",
     "useCase3.description": "مشاور روانشناسی و خودیاری برای رشد شخصی",
     "useCase3.prompt": "در مدیریت اضطراب به من کمک کن",
+    "useCase3.response1": "بیایید مکث کنیم. من شما را از طریق یک تمرین 90 ثانیه‌ای زمینه‌یابی هدایت می‌کنم: 5 چیزی که می‌بینید، 4 چیزی که می‌توانید لمس کنید، 3 چیزی که می‌شنوید، 2 چیزی که می‌توانید بو کنید و 1 چیزی که می‌توانید بچشید را توجه کنید.",
+    "useCase3.prompt2": "کتاب 'اثر مرکب' را خلاصه کن.",
+    "useCase3.response2": "این کتاب درباره این است که چگونه عادت‌های کوچک و مداوم به نتایج بزرگ در طول زمان منجر می‌شوند. دارن هاردی توضیح می‌دهد که موفقیت از تغییرات رادیکال نمی‌آید بلکه از نظم روزانه‌ای می‌آید که انباشته می‌شود.",
+    "useCase3.prompt3": "نمی‌دانم در زندگی چه می‌خواهم.",
+    "useCase3.response3": "اشکالی ندارد. می‌خواهید 3 سؤال برای نوشتن در دفتر خاطرات را با هم بررسی کنیم؟ امتحان کنید: 1) در کودکی از چه چیزی لذت می‌بردید؟ 2) چه زمانی گذر زمان را فراموش می‌کنید؟ 3) اگر نمی‌توانستید شکست بخورید، چه کاری انجام می‌دادید؟",
     
     "useCase4.title": "دستیار لیدی باس",
     "useCase4.description": "پشتیبانی برندسازی و بازاریابی با هدایت زنان",
-    "useCase4.prompt": "یک برنامه رسانه اجتماعی ایجاد کن",
+    "useCase4.prompt": "چگونه طراحی دوره خود برای زنان را شروع کنم؟",
+    "useCase4.response1": "هدف و مخاطب خود را به من بگویید - من ساختار و عناوین جلسات را پیشنهاد می‌دهم. برای مثال، اگر این یک دوره اعتماد به نفس است، می‌توانیم با 'شناسایی نقاط قوت منحصر به فرد شما' به عنوان ماژول اول شروع کنیم.",
+    "useCase4.prompt2": "یک برنامه رسانه اجتماعی ایجاد کن",
+    "useCase4.response2": "اینجا یک چارچوب هفتگی است: دوشنبه - نقل قول الهام‌بخش، سه‌شنبه - نکته آموزشی، چهارشنبه - برجسته‌سازی مشتری، پنج‌شنبه - داستان شخصی، جمعه - منبع رایگان، آخر هفته - سؤال تعاملی.",
+    "useCase4.prompt3": "یک عنوان درباره اعتماد به نفس برای استوری اینستاگرام من بنویس",
+    "useCase4.response3": "شما 'زیاد' نیستید - شما دقیقاً کافی هستید. آن را بپذیرید. دنیا به صدای اصیل شما نیاز دارد، نه یک اکوی دیگر. #قدرت_خود_را_بپذیرید #انرژی_لیدی_باس",
+    
+    "useCase5.title": "دستیار تجارت الکترونیک",
+    "useCase5.description": "مدیریت محصول و خدمات مشتری",
+    "useCase5.prompt": "به من در بهینه‌سازی لیست‌های محصولات کمک کن",
+    "useCase5.response1": "من لیست‌های فعلی شما را تحلیل می‌کنم و بهبودهایی را برای عناوین، توضیحات و تصاویر بر اساس الگوریتم‌های بازار و الگوهای جستجوی مشتری پیشنهاد می‌دهم.",
+    "useCase5.prompt2": "یک ایمیل پیگیری مشتری ایجاد کن",
+    "useCase5.response2": "اینجا یک قالب است: 'از خرید شما متشکریم! امیدواریم از [محصول] خود لذت می‌برید. آیا ممکن است تجربه خود را با یک بررسی سریع به اشتراک بگذارید؟ اینجا 10٪ تخفیف برای سفارش بعدی شماست.'",
+    "useCase5.prompt3": "یک استراتژی فروش بیشتر خوب چیست؟",
+    "useCase5.response3": "قانون 3 را امتحان کنید: یک گزینه بودجه، محصول هدف خود، و یک جایگزین برتر را نشان دهید. بیشتر مشتریان وقتی به این شکل ارائه شود به گزینه میانی جذب می‌شوند.",
+    
+    "useCase6.title": "دستیار شخصی",
+    "useCase6.description": "وظایف روزانه و مدیریت برنامه",
+    "useCase6.prompt": "روز من را برای حداکثر بهره‌وری سازماندهی کن",
+    "useCase6.response1": "من تقویم شما را با جلسات کاری متمرکز در صبح، جلسات در میانه روز و وظایف اداری در اواخر بعدازظهر که انرژی معمولاً کاهش می‌یابد، بلوک‌بندی کرده‌ام.",
+    "useCase6.prompt2": "قرار ملاقات من را یادآوری کن",
+    "useCase6.response2": "شما فردا ساعت 15:30 قرار ملاقات پزشک دارید. من آن را با یادآوری 30 دقیقه‌ای به تقویم شما اضافه کرده‌ام و آدرس کلینیک را هم شامل کرده‌ام.",
+    "useCase6.prompt3": "ایمیل‌های من از امروز را خلاصه کن",
+    "useCase6.response3": "شما 12 ایمیل دریافت کرده‌اید: 3 مورد نیاز به اقدام فوری دارند (پیشنهادات مشتری)، 4 مورد فقط برای اطلاع هستند (به‌روزرسانی‌های خبرنامه)، و 5 مورد اولویت پایین دارند. فوری‌ترین مورد از سارا درباره ارائه فردا است.",
     
     // Benefits
     "benefits.title": "گردش کار خود را متحول کنید",
@@ -317,21 +389,11 @@ const translations = {
     "process.step7": "تحویل و آموزش",
     "process.step7.description": "پیاده‌سازی و آشنایی تیم",
     
-    // Pricing
-    "pricing.title": "سرمایه‌گذاری",
-    "pricing.subtitle": "ساختار قیمت‌گذاری شفاف",
-    "pricing.description": "قیمت‌گذاری ما بر اساس نیازهای خاص پروژه دستیار هوش مصنوعی شما است.",
-    
-    "pricing.setup": "هزینه راه‌اندازی:",
-    "pricing.setupValue": "بستگی به محدوده و پیچیدگی پروژه دارد",
-    
-    "pricing.subscription": "اشتراک ماهانه:",
-    "pricing.subscriptionValue": "بر اساس استفاده و مدل‌های هوش مصنوعی پیشرفته",
-    
-    "pricing.custom": "قیمت سفارشی:",
-    "pricing.customValue": "پس از مشاوره اولیه ارائه می‌شود",
-    
-    "pricing.cta": "قیمت سفارشی خود را دریافت کنید",
+    // CTA section
+    "cta.title": "آماده متحول کردن گردش کار خود هستید؟",
+    "cta.subtitle": "بگذارید سیناپس دستیار هوش مصنوعی سفارشی شما را برای خودکارسازی وظایف، افزایش بهره‌وری و مقیاس‌پذیری عملیات شما بسازد.",
+    "cta.primary": "دستیار سفارشی خود را دریافت کنید",
+    "cta.secondary": "مشاوره رزرو کنید",
     
     // Contact
     "contact.title": "سفر خود را آغاز کنید",

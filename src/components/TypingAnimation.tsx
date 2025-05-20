@@ -41,10 +41,10 @@ export default function TypingAnimation({
   }, [currentIndex, text, speed, onComplete]);
   
   return (
-    <div className="whitespace-pre-wrap">
+    <div className="whitespace-pre-wrap inline-flex items-center">
       {displayedText}
       {currentIndex < text.length && (
-        <span className="inline-block w-2 h-4 bg-synapse-500 dark:bg-synapse-400 ml-0.5 cursor-blink"></span>
+        <span className="inline-block w-2 h-4 bg-synapse-500 dark:bg-synapse-400 ml-0.5 rtl:mr-0.5 rtl:ml-0 animate-pulse"></span>
       )}
     </div>
   );

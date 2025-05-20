@@ -7,8 +7,7 @@ import FeaturesSection from "@/components/FeaturesSection";
 import UseCasesSection from "@/components/UseCasesSection";
 import BenefitsSection from "@/components/BenefitsSection";
 import ProcessSection from "@/components/ProcessSection";
-import PricingSection from "@/components/PricingSection";
-import ContactSection from "@/components/ContactSection";
+import HomeCallToAction from "@/components/HomeCallToAction";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -23,8 +22,7 @@ const Index = () => {
           <UseCasesSection />
           <BenefitsSection />
           <ProcessSection />
-          <PricingSection />
-          <ContactSection />
+          <HomeCallToAction />
         </main>
         <Footer />
       </div>

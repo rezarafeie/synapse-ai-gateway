@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useRef } from "react";
 import { useLanguage } from "@/context/LanguageContext";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,7 @@ type AssistantType = {
 export default function UseCasesSection() {
   const { t } = useLanguage();
   const [selectedAssistant, setSelectedAssistant] = useState(0);
-  const [activePrompt, setActivePrompt] = useState(0);
+  const [activePrompt, setActivePrompt] = useState(-1);
   const [typing, setTyping] = useState(false);
   const [showResponse, setShowResponse] = useState(false);
   const messageEndRef = useRef<HTMLDivElement>(null);
@@ -104,6 +105,46 @@ export default function UseCasesSection() {
         },
       ]
     },
+    {
+      id: "ecommerce",
+      name: t("useCase5.title"),
+      description: t("useCase5.description"),
+      avatar: "🛒",
+      prompts: [
+        {
+          text: t("useCase5.prompt"),
+          response: t("useCase5.response1")
+        },
+        {
+          text: t("useCase5.prompt2"),
+          response: t("useCase5.response2")
+        },
+        {
+          text: t("useCase5.prompt3"),
+          response: t("useCase5.response3")
+        },
+      ]
+    },
+    {
+      id: "personal",
+      name: t("useCase6.title"),
+      description: t("useCase6.description"),
+      avatar: "📅",
+      prompts: [
+        {
+          text: t("useCase6.prompt"),
+          response: t("useCase6.response1")
+        },
+        {
+          text: t("useCase6.prompt2"),
+          response: t("useCase6.response2")
+        },
+        {
+          text: t("useCase6.prompt3"),
+          response: t("useCase6.response3")
+        },
+      ]
+    },
   ];
   
   const scrollToBottom = () => {
@@ -162,7 +203,7 @@ export default function UseCasesSection() {
                     }`}
                   >
                     <div className="flex items-center">
-                      <div className="text-2xl mr-3">{assistant.avatar}</div>
+                      <div className="text-2xl mr-3 rtl:ml-3 rtl:mr-0">{assistant.avatar}</div>
                       <div>
                         <div className="font-medium">{assistant.name}</div>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
@@ -184,7 +225,7 @@ export default function UseCasesSection() {
               {/* Chat header */}
               <div className="bg-white dark:bg-gray-800 p-4 border-b border-gray-200 dark:border-gray-700">
                 <div className="flex items-center">
-                  <div className="text-2xl mr-3">{assistants[selectedAssistant].avatar}</div>
+                  <div className="text-2xl mr-3 rtl:ml-3 rtl:mr-0">{assistants[selectedAssistant].avatar}</div>
                   <div>
                     <div className="font-medium">{assistants[selectedAssistant].name}</div>
                     <div className="text-sm text-gray-500 dark:text-gray-400">
@@ -201,7 +242,7 @@ export default function UseCasesSection() {
                   <div className="flex h-9 w-9 shrink-0 select-none items-center justify-center rounded-full bg-synapse-100 dark:bg-synapse-900 text-synapse-500">
                     <MessageSquare className="h-5 w-5" />
                   </div>
-                  <div className="ml-3 flex-1 space-y-1 bg-white dark:bg-gray-800 p-4 rounded-lg">
+                  <div className="ml-3 rtl:mr-3 rtl:ml-0 flex-1 space-y-1 bg-white dark:bg-gray-800 p-4 rounded-lg">
                     <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
                       {t("useCases.welcome").replace("{name}", assistants[selectedAssistant].name)}
                     </p>
@@ -212,7 +253,7 @@ export default function UseCasesSection() {
                 {showResponse && (
                   <>
                     <div className="flex items-start justify-end">
-                      <div className="mr-3 flex-1 space-y-1 bg-synapse-100 dark:bg-synapse-900 p-4 rounded-lg text-right">
+                      <div className="mr-3 rtl:ml-3 rtl:mr-0 flex-1 space-y-1 bg-synapse-100 dark:bg-synapse-900 p-4 rounded-lg text-right">
                         <p className="text-sm leading-relaxed text-gray-800 dark:text-gray-200">
                           {assistants[selectedAssistant].prompts[activePrompt].text}
                         </p>
@@ -226,7 +267,7 @@ export default function UseCasesSection() {
                       <div className="flex h-9 w-9 shrink-0 select-none items-center justify-center rounded-full bg-synapse-100 dark:bg-synapse-900 text-synapse-500">
                         <MessageSquare className="h-5 w-5" />
                       </div>
-                      <div className="ml-3 flex-1 space-y-1 bg-white dark:bg-gray-800 p-4 rounded-lg">
+                      <div className="ml-3 rtl:mr-3 rtl:ml-0 flex-1 space-y-1 bg-white dark:bg-gray-800 p-4 rounded-lg">
                         <p className="text-sm leading-relaxed text-gray-700 dark:text-gray-300">
                           {typing ? (
                             <TypingAnimation 
