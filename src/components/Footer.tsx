@@ -2,7 +2,7 @@
 import { useLanguage } from "@/context/LanguageContext";
 import ThemeToggle from "./ThemeToggle";
 import LanguageToggle from "./LanguageToggle";
-import { Instagram, Linkedin, Mail, Phone } from "lucide-react";
+import { Instagram, Linkedin, Mail } from "lucide-react";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -29,20 +29,11 @@ export default function Footer() {
             <ul className="space-y-2">
               <li>
                 <a 
-                  href="mailto:info@rafiei-group.com" 
+                  href="mailto:contact@rafiei.co" 
                   className="text-gray-600 dark:text-gray-400 hover:text-synapse-600 dark:hover:text-synapse-400 flex items-center"
                 >
                   <Mail size={16} className="mr-2" />
-                  info@rafiei-group.com
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="tel:+989123456789" 
-                  className="text-gray-600 dark:text-gray-400 hover:text-synapse-600 dark:hover:text-synapse-400 flex items-center"
-                >
-                  <Phone size={16} className="mr-2" />
-                  +98 912 345 6789
+                  contact@rafiei.co
                 </a>
               </li>
             </ul>

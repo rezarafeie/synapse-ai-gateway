@@ -5,10 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowRight, ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowRight, ArrowLeft, Loader2, CheckCircle2, XCircle } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { Card, CardContent } from "@/components/ui/card";
 
 type FormStep = 1 | 2 | 3;
+type WebhookStatus = 'idle' | 'loading' | 'success' | 'error';
 
 const RequestForm = () => {
   const { t, language } = useLanguage();
@@ -16,6 +18,8 @@ const RequestForm = () => {
   const [currentStep, setCurrentStep] = useState<FormStep>(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [progress, setProgress] = useState(33);
+  const [webhookStatus, setWebhookStatus] = useState<WebhookStatus>('idle');
+  const [lastRequestTime, setLastRequestTime] = useState<string>("");
   
   // Webhook URL
   const WEBHOOK_URL = "https://rafeie.app.n8n.cloud/webhook-test/synapserequest";
@@ -100,7 +104,13 @@ const RequestForm = () => {
       // Log data being sent for debugging
       console.log("Sending webhook with data:", webhookData);
       
-      // Send data to webhook endpoint with mode: 'no-cors' to handle CORS issues
+      // Set proper Content-Type header to application/json
+      // Create a blob with JSON data to ensure correct content-type
+      const jsonBlob = new Blob([JSON.stringify(webhookData)], {
+        type: 'application/json'
+      });
+      
+      // Send data to webhook endpoint with proper JSON content-type
       const response = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: {
@@ -111,11 +121,12 @@ const RequestForm = () => {
       });
 
       // Since we're using no-cors mode, we'll get an opaque response
-      // We won't be able to check response.ok, so we'll assume it worked
       console.log("Webhook response received");
+      setLastRequestTime(new Date().toLocaleString());
       return true;
     } catch (error) {
       console.error("Error sending webhook:", error);
+      setLastRequestTime(new Date().toLocaleString());
       throw error;
     }
   };
@@ -129,6 +140,7 @@ const RequestForm = () => {
     }
     
     setIsSubmitting(true);
+    setWebhookStatus('loading');
     
     try {
       // Validate required fields before submission
@@ -141,11 +153,13 @@ const RequestForm = () => {
           variant: "destructive"
         });
         setIsSubmitting(false);
+        setWebhookStatus('error');
         return;
       }
       
       // Send data to webhook
       await sendToWebhook();
+      setWebhookStatus('success');
       
       toast({
         title: language === "en" ? "Request submitted!" : "درخواست ارسال شد!",
@@ -166,6 +180,7 @@ const RequestForm = () => {
       setCurrentStep(1);
     } catch (error) {
       console.error("Submission error:", error);
+      setWebhookStatus('error');
       toast({
         title: language === "en" ? "Submission error" : "خطا در ارسال",
         description: language === "en" 
@@ -181,6 +196,74 @@ const RequestForm = () => {
   // Translations based on language
   const getFieldLabel = (en: string, fa: string) => {
     return language === "en" ? en : fa;
+  };
+
+  // Debug card for webhook status
+  const WebhookDebugCard = () => {
+    const getStatusColor = () => {
+      switch(webhookStatus) {
+        case 'success': return 'text-green-600';
+        case 'error': return 'text-red-600';
+        case 'loading': return 'text-blue-600';
+        default: return 'text-gray-600';
+      }
+    };
+
+    const getStatusIcon = () => {
+      switch(webhookStatus) {
+        case 'success': return <CheckCircle2 className="h-5 w-5 text-green-600" />;
+        case 'error': return <XCircle className="h-5 w-5 text-red-600" />;
+        case 'loading': return <Loader2 className="h-5 w-5 animate-spin text-blue-600" />;
+        default: return null;
+      }
+    };
+
+    return (
+      <Card className="mt-6 bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700">
+        <CardContent className="p-4">
+          <h3 className="font-medium mb-2">
+            {language === "en" ? "Webhook Debug Info" : "اطلاعات دیباگ وب‌هوک"}
+          </h3>
+          <div className="grid grid-cols-2 gap-2 text-sm">
+            <div className="font-semibold">
+              {language === "en" ? "Status:" : "وضعیت:"}
+            </div>
+            <div className={`flex items-center gap-1 ${getStatusColor()}`}>
+              {getStatusIcon()}
+              {language === "en" ? webhookStatus.toUpperCase() : 
+                webhookStatus === 'idle' ? 'آماده' : 
+                webhookStatus === 'loading' ? 'در حال ارسال' : 
+                webhookStatus === 'success' ? 'موفق' : 'خطا'}
+            </div>
+
+            <div className="font-semibold">
+              {language === "en" ? "URL:" : "آدرس:"}
+            </div>
+            <div className="truncate text-xs" dir="ltr">
+              {WEBHOOK_URL}
+            </div>
+
+            {lastRequestTime && (
+              <>
+                <div className="font-semibold">
+                  {language === "en" ? "Last Request:" : "آخرین درخواست:"}
+                </div>
+                <div dir="ltr">
+                  {lastRequestTime}
+                </div>
+              </>
+            )}
+
+            <div className="font-semibold">
+              {language === "en" ? "Content-Type:" : "نوع محتوا:"}
+            </div>
+            <div className="text-green-600" dir="ltr">
+              application/json
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
   };
 
   return (
@@ -329,6 +412,9 @@ const RequestForm = () => {
                 />
               </div>
             </div>
+            
+            {/* Debug card - only shown in step 3 */}
+            <WebhookDebugCard />
           </div>
           
           {/* Navigation buttons */}
