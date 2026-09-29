@@ -1,73 +1,37 @@
-# Welcome to your Lovable project
+# Synapse AI Gateway
 
-## Project info
+A web application for the Synapse AI product ecosystem, designed around modern AI experiences and a reusable product interface.
 
-**URL**: https://lovable.dev/projects/dedeb87e-2f87-4366-9ca9-248267472299
+## Overview
+Synapse AI Gateway is a TypeScript/React application that provides the product-facing layer for AI-driven workflows in the Synapse ecosystem.
 
-## How can I edit this code?
+## Engineering Highlights
+- Component-driven React architecture
+- Typed application development with TypeScript
+- Query and async-state management with TanStack React Query
+- Schema validation with Zod
+- Form workflows with React Hook Form
+- Responsive interface built from Radix primitives and Tailwind CSS
+- Data visualization support with Recharts
 
-There are several ways of editing your application.
+## Tech Stack
+**Frontend:** React, TypeScript, Vite  
+**UI:** Tailwind CSS, shadcn/ui, Radix UI  
+**State & Data:** TanStack React Query  
+**Forms & Validation:** React Hook Form, Zod  
+**Visualization:** Recharts
 
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/dedeb87e-2f87-4366-9ca9-248267472299) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## Development
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Production build:
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+```bash
+npm run build
+```
 
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/dedeb87e-2f87-4366-9ca9-248267472299) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+---
+Part of Reza Rafiei's AI product portfolio.
